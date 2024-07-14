@@ -1,6 +1,8 @@
+import { useState } from "react";
 import Video from "./Video";
 
 const Editor = () => {
+  const [startCropper, setStartCropper] = useState(false);
   return (
     <div className="flex h-screen items-center text-white">
       <div className=" rounded-lg w-2/3 bg-[#37393f] mx-auto">
@@ -14,11 +16,14 @@ const Editor = () => {
           </div>
           <div></div>
         </div>
-        <Video isCropper={true} />
+        <Video isCropper={true} startCropper={startCropper} />
         <hr className="border-[#404249]" />
         <div className="flex justify-between p-4">
           <div className="flex gap-2">
-            <button className="bg-[#7636d6] p-2 rounded-lg text-sm font-semibold">
+            <button
+              className="bg-[#7636d6] p-2 rounded-lg text-sm font-semibold"
+              onClick={() => setStartCropper(true)}
+            >
               Start Cropper
             </button>
             <button className="bg-[#7636d6] p-2 rounded-lg text-sm font-semibold">

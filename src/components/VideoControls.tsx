@@ -80,7 +80,8 @@ const VideoControls = ({
 
   const handleChangeRatio = (crop: string) => {
     // videoRef.current.pause();
-    handlePauseAndPlay();
+    videoRef.current.pause();
+    setIsVideoPlaying(false);
     setCropRatio(crop);
 
     // videoRef.current.play();

@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import VideoControls from "./VideoControls";
 import CropPreviewPlaceholder from "./CropPreviewPlaceholder";
+import Cropper from "./Cropper";
 
-interface CropRatio {
-  width: number;
-  height: number;
-}
-
-const Video = ({ isCropper }: { isCropper: boolean }) => {
+const Video = ({
+  isCropper,
+  startCropper,
+}: {
+  isCropper: boolean;
+  startCropper: boolean;
+}) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const croppedCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const [cropRatio, setCropRatio] = useState<string>("9:16");
@@ -20,13 +22,15 @@ const Video = ({ isCropper }: { isCropper: boolean }) => {
         const ctx = canvas.getContext("2d");
 
         if (ctx) {
-          const { videoHeight } = fullVideo;
+          const { videoHeight, videoWidth } = fullVideo;
 
           const cropRatioWidth = Number(cropRatio.split(":")[0]);
           const cropRatioHeight = Number(cropRatio.split(":")[1]);
 
           const cropWidth = (videoHeight * cropRatioWidth) / cropRatioHeight;
           const cropHeight = videoHeight;
+
+          const startX = (videoWidth - cropWidth) / 2;
 
           canvas.width = cropWidth;
           canvas.height = cropHeight;
@@ -35,7 +39,7 @@ const Video = ({ isCropper }: { isCropper: boolean }) => {
 
           ctx.drawImage(
             fullVideo,
-            0,
+            startX,
             0,
             cropWidth,
             cropHeight,
@@ -53,8 +57,9 @@ const Video = ({ isCropper }: { isCropper: boolean }) => {
         const fullVideo = videoRef.current;
         if (fullVideo.paused) {
           clearInterval(interval);
-        } else {
+
           drawFrame();
+        } else {
           interval = setInterval(drawFrame, 1000 / 30); // 30 FPS
         }
       }
@@ -89,12 +94,22 @@ const Video = ({ isCropper }: { isCropper: boolean }) => {
   return (
     <div className="p-20 flex gap-3">
       <div className="w-1/2">
-        <video
-          id="player"
-          src="./src/assets/football.mp4"
-          ref={videoRef}
-          className="rounded-lg"
-        />
+        <div className="relative">
+          {startCropper && (
+            <Cropper videoRef={videoRef} cropRatio={cropRatio} />
+          )}
+          {/* <div
+            className="absolute border border-red-500 w-10 left-10"
+            style={{ height: videoRef.current?.getBoundingClientRect().height }}
+          ></div> */}
+          <video
+            id="player"
+            src="./src/assets/football.mp4"
+            ref={videoRef}
+            className="rounded-lg"
+          />
+        </div>
+
         <VideoControls
           videoRef={videoRef}
           cropRatio={cropRatio}
