@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .slider::-webkit-slider-thumb {
+    width: 12px;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 12px;
+    background: #fff;
+    border-radius: 100%;
+    border: 0;
+  }
+  .slider::-moz-range-progress {
+    background: #fff;
+  }
+}
