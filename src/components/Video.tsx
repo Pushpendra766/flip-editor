@@ -6,9 +6,11 @@ import Cropper from "./Cropper";
 const Video = ({
   isCropper,
   startCropper,
+  generatePreview,
 }: {
   isCropper: boolean;
   startCropper: boolean;
+  generatePreview: boolean;
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const croppedCanvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -120,7 +122,7 @@ const Video = ({
       </div>
       <div className="w-1/2 -mt-6">
         <p className="text-center text-[#636469]">Preview</p>
-        {isCropper ? (
+        {isCropper && generatePreview ? (
           <div className="flex justify-center">
             <canvas ref={croppedCanvasRef} className="rounded-lg h-80"></canvas>
           </div>

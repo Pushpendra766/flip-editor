@@ -3,6 +3,7 @@ import Video from "./Video";
 
 const Editor = () => {
   const [startCropper, setStartCropper] = useState(false);
+  const [generatePreview, setGeneratePreview] = useState(false);
   return (
     <div className="flex h-screen items-center text-white">
       <div className=" rounded-lg w-2/3 bg-[#37393f] mx-auto">
@@ -16,7 +17,11 @@ const Editor = () => {
           </div>
           <div></div>
         </div>
-        <Video isCropper={true} startCropper={startCropper} />
+        <Video
+          isCropper={true}
+          startCropper={startCropper}
+          generatePreview={generatePreview}
+        />
         <hr className="border-[#404249]" />
         <div className="flex justify-between p-4">
           <div className="flex gap-2">
@@ -31,7 +36,8 @@ const Editor = () => {
             </button>
             <button
               className="bg-[#7636d6] p-2 rounded-lg text-sm font-semibold disabled:bg-[#59388a]"
-              disabled
+              disabled={!startCropper}
+              onClick={() => setGeneratePreview(true)}
             >
               Generate Preview
             </button>
