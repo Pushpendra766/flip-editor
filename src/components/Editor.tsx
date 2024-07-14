@@ -14,7 +14,7 @@ const Editor = () => {
           </div>
           <div></div>
         </div>
-        <Video />
+        <Video isCropper={true} />
         <hr className="border-[#404249]" />
         <div className="flex justify-between p-4">
           <div className="flex gap-2">

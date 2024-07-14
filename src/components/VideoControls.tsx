@@ -4,11 +4,20 @@ import { HiSpeakerWave, HiSpeakerXMark } from "react-icons/hi2";
 import { Dropdown } from "flowbite-react";
 import { CROP_RATIOS, PLAYBACK_SPEEDS } from "../constants/constants";
 
-const VideoControls = ({ videoRef }: { videoRef: any }) => {
+interface VideoControlsType {
+  videoRef: any;
+  cropRatio: string;
+  setCropRatio: (val: string) => void;
+}
+
+const VideoControls = ({
+  videoRef,
+  cropRatio,
+  setCropRatio,
+}: VideoControlsType) => {
   const [volume, setVolume] = useState<number>(0.4);
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [playbackSpeed, setPlaybackSpeed] = useState<number>(1);
-  const [cropRatio, setCropRatio] = useState<string>("9:16");
 
   const videoLength = videoRef.current?.duration
     ? videoRef.current.duration
@@ -67,6 +76,14 @@ const VideoControls = ({ videoRef }: { videoRef: any }) => {
     const totalSeconds = String(Math.floor(videoLength % 60)).padStart(2, "0");
 
     return `${minutes}:${seconds} | ${totalMinutes}:${totalSeconds}`;
+  };
+
+  const handleChangeRatio = (crop: string) => {
+    // videoRef.current.pause();
+    handlePauseAndPlay();
+    setCropRatio(crop);
+
+    // videoRef.current.play();
   };
 
   useEffect(() => {
@@ -147,7 +164,7 @@ const VideoControls = ({ videoRef }: { videoRef: any }) => {
               <Dropdown.Item
                 className="bg-[#37393f]  px-2 py-1 hover:bg-[#474a52]"
                 key={crop}
-                onClick={() => setCropRatio(crop)}
+                onClick={() => handleChangeRatio(crop)}
               >
                 {crop}
               </Dropdown.Item>
