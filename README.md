@@ -14,5 +14,5 @@ Live Preview -
     ```
 3.  Run
     ```bash
-    npm start
+    npm run dev
     ```
