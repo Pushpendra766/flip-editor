@@ -1,6 +1,5 @@
 # Flip Editor
 
-Live Preview - 
 
 ### Setup Instructions
 
